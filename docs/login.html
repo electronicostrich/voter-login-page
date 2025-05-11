@@ -19,7 +19,7 @@
         firebase.auth().signInWithPopup(provider).then(function(result) {
           result.user.getIdToken().then(function(token) {
             // Redirect back to your Streamlit app with the token
-            window.location.href = "http://localhost:8501?token=" + token;
+            window.location.href = "https://voter-app-811562535169.us-central1.run.app?token=" + token;
           });
         }).catch(function(error) {
           document.body.innerHTML = "<p style='color:red;'>Login failed: " + error.message + "</p>";
