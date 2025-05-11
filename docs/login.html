@@ -1,2 +1,38 @@
-<meta http-equiv="refresh" content="0; URL=login.html">
-<!-- Trigger rebuild -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login with Google</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyBlau4R8yngbaQpJImTWEFl56r9F7lfev0",
+        authDomain: "learned-maker-458823-r6.firebaseapp.com",
+        projectId: "learned-maker-458823-r6",
+        appId: "1:811562535169:web:431f5b2f670739de147300"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      firebase.auth().getRedirectResult().then(function(result) {
+        if (result.user) {
+          result.user.getIdToken().then(function(token) {
+            const redirectUrl = "https://voter-app-811562535169.us-central1.run.app?token=" + token;
+            window.location.replace(redirectUrl);
+          });
+        }
+      }).catch(function(error) {
+        document.body.innerHTML = "<p style='color:red;'>Login failed: " + error.message + "</p>";
+      });
+
+      function signIn() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Login to Voter Tool</h2>
+    <button onclick="signIn()">🔐 Login with Google</button>
+  </body>
+</html>
