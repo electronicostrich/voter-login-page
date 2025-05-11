@@ -6,6 +6,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script>
+      // Firebase configuration
       var firebaseConfig = {
         apiKey: "AIzaSyBlau4R8yngbaQpJImTWEFl56r9F7lfev0",
         authDomain: "learned-maker-458823-r6.firebaseapp.com",
@@ -14,10 +15,12 @@
       };
       firebase.initializeApp(firebaseConfig);
 
+      // Function to handle Google login via Firebase popup
       function signIn() {
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
           result.user.getIdToken().then(function(token) {
+            // Redirect to your Streamlit app with the token
             const redirectUrl = "https://voter-app-811562535169.us-central1.run.app?token=" + token;
             window.location.replace(redirectUrl);
           });
@@ -32,4 +35,3 @@
     <button onclick="signIn()">🔐 Login with Google</button>
   </body>
 </html>
-
