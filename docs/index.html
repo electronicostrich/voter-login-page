@@ -15,28 +15,16 @@
       };
       firebase.initializeApp(firebaseConfig);
 
-      // ✅ Handle redirect result from Google login
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          user.getIdToken().then(function(token) {
+      function signIn() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          result.user.getIdToken().then(function(token) {
             const redirectUrl = "https://voter-app-811562535169.us-central1.run.app?token=" + token;
             window.location.replace(redirectUrl);
           });
-        }
-      });
-
-      function signIn() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithRedirect(provider);
-      }
-        ).catch(function(error) {
-        document.body.innerHTML = "<p style='color:red;'>Login failed: " + error.message + "</p>";
-      });
-
-      // ✅ Start login flow
-      function signIn() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithRedirect(provider);
+        }).catch(function(error) {
+          document.body.innerHTML = "<p style='color:red;'>Login failed: " + error.message + "</p>";
+        });
       }
     </script>
   </head>
